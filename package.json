@@ -1,0 +1,26 @@
+{
+  "name": "batchjob",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@bull-board/api": "^6.14.0",
+    "@bull-board/express": "^6.14.0",
+    "axios": "^1.13.2",
+    "bullmq": "^5.63.0",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "ioredis": "^5.8.2",
+    "mongoose": "^8.19.3",
+    "nodemailer": "^7.0.10",
+    "nodemon": "^3.1.10"
+  }
+}

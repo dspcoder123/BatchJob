@@ -1,0 +1,1 @@
+Producer — the part that adds jobs into the queue whenever an API (like your text-to-PPT request or Perplexity search) is triggered.
