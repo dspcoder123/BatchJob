@@ -5,7 +5,7 @@ import googleRoutes from "./src/api/routes/addGoogleJob.js";
 import myaiUserHistoryRoutes from './src/api/routes/myaiUserHistory.js'
 import "./src/batch/workers/mainWorker.js";
 import "./src/batch/workers/googleSearchWorker.js";
-
+import cors from 'cors';
 
 
 
@@ -17,13 +17,18 @@ import { jobQueue, job1Queue } from "./src/batch/queues/jobQueue.js";
 
 const app = express();
 const serverAdapter = new ExpressAdapter();
-
 // Configure Bull Board with both queues
 createBullBoard({
   queues: [new BullMQAdapter(jobQueue), new BullMQAdapter(job1Queue)],
   serverAdapter,
 });
 serverAdapter.setBasePath("/admin/queues");
+app.use(cors({
+  origin: 'http://localhost:3000', // allow requests from your frontend origin
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  credentials: true // if you need to send cookies or auth headers
+}));
+
 
 app.use("/admin/queues", serverAdapter.getRouter());
 app.use(express.json());
@@ -39,7 +44,7 @@ mongoose
   })
   .then(() => {
     console.log("✅ Connected to MongoDB");
-    app.listen(3000, () => console.log("🚀 Server running on port 3000"));
+    app.listen(4000, () => console.log("🚀 Server running on port 4000"));
   })
   .catch((err) => {
     console.error("❌ Failed to connect to MongoDB:", err);
