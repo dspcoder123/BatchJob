@@ -47,4 +47,37 @@ router.post("/history/clear", async (req, res) => {
   }
 });
 
+
+// Delete a single chat history item for a user
+router.delete("/history/:historyId", async (req, res) => {
+  const { historyId } = req.params;
+  const { userEmail } = req.query; // Pass userEmail as query param for validation
+  const jobType = "perplexitySearch";
+  try {
+    const doc = await MyaiUserHistory.findOneAndUpdate(
+      { userEmail, jobType },
+      { $pull: { history: { _id: historyId } } },
+      { new: true }
+    );
+    res.json({ success: true, data: doc });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err });
+  }
+});
+
+
+router.post("/history/rename", async (req, res) => {
+  const { historyId, newQuery, userEmail } = req.body;
+  const jobType = "perplexitySearch";
+  try {
+    await MyaiUserHistory.updateOne(
+      { userEmail, jobType, "history._id": historyId },
+      { $set: { "history.$.query": newQuery } }
+    );
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err });
+  }
+});
+
 export default router;
