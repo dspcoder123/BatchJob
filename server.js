@@ -24,7 +24,7 @@ createBullBoard({
 });
 serverAdapter.setBasePath("/admin/queues");
 app.use(cors({
-  origin: 'http://localhost:3000', // allow requests from your frontend origin
+  origin: 'http://localhost:3000', 
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   credentials: true // if you need to send cookies or auth headers
 }));
@@ -44,7 +44,7 @@ mongoose
   })
   .then(() => {
     console.log("✅ Connected to MongoDB");
-    app.listen(4000, () => console.log("🚀 Server running on port 4000"));
+    app.listen(5000, () => console.log("🚀 Server running on port 4000"));
   })
   .catch((err) => {
     console.error("❌ Failed to connect to MongoDB:", err);
