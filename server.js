@@ -24,12 +24,13 @@ createBullBoard({
 });
 serverAdapter.setBasePath("/admin/queues");
 app.use(cors({
-  origin: 'http://localhost:3000', 
+  origin: [
+    'http://localhost:3000',
+    'https://auth-management-iota.vercel.app'
+  ],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  credentials: true // if you need to send cookies or auth headers
+  credentials: true
 }));
-
-
 app.use("/admin/queues", serverAdapter.getRouter());
 app.use(express.json());
 app.use("/api", jobRoutes);
