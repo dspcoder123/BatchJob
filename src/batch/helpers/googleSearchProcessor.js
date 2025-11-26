@@ -5,7 +5,7 @@ const SEARCH_ENGINE_ID = process.env.GOOGLE_SEARCH_ENGINE_ID;
 
 export const processGoogleSearch = async (jobType, data) => {
   if (jobType === "googleSearch") {
-    const url = `https://www.googleapis.com/customsearch/v1?key=${API_KEY}&cx=${SEARCH_ENGINE_ID}&q=${encodeURIComponent(data.query)}&num=1`;
+    const url = `https://www.googleapis.com/customsearch/v1?key=${API_KEY}&cx=${SEARCH_ENGINE_ID}&q=${encodeURIComponent(data.query)}&num=10`;
     const response = await axios.get(url);
     const simplifiedResults = (response.data.items || []).map(item => ({
       title: item.title,

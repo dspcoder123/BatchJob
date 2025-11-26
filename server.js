@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import jobRoutes from "./src/api/routes/jobRoutes.js";
 import googleRoutes from "./src/api/routes/addGoogleJob.js";
 import myaiUserHistoryRoutes from './src/api/routes/myaiUserHistory.js'
+import googleSearchHistory from "./src/api/routes/googleSearchRoutes.js";
 import "./src/batch/workers/mainWorker.js";
 import "./src/batch/workers/googleSearchWorker.js";
 import cors from 'cors';
@@ -36,6 +37,7 @@ app.use(express.json());
 app.use("/api", jobRoutes);
 app.use("/api", googleRoutes);
 app.use('/api/myai', myaiUserHistoryRoutes);
+app.use('/api/google', googleSearchHistory)
 
 // Connect to MongoDB
 mongoose
@@ -45,7 +47,7 @@ mongoose
   })
   .then(() => {
     console.log("✅ Connected to MongoDB");
-    app.listen(5000, () => console.log("🚀 Server running on port 4000"));
+    app.listen(5000, () => console.log("🚀 Server running on port 5000"));
   })
   .catch((err) => {
     console.error("❌ Failed to connect to MongoDB:", err);
