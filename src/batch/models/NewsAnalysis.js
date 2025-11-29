@@ -32,7 +32,7 @@ const newsAnalysisSchema = new mongoose.Schema(
       aiText: String,
   
       status: { type: Boolean, default: true },
-      jobId: { type: mongoose.Schema.Types.ObjectId, ref: "NewsJob" }
+      jobId: { type: String }
     },
     { timestamps: true }
   );

@@ -73,7 +73,7 @@ const newsWorker = new Worker(
           content: article.content,
           aiText: aiAnalysis.rawJsonText || "",
           status: true,
-          jobId: jobDoc ? jobDoc._id : null
+          jobId: jobDoc ? jobDoc._id.toString() : null
         });
         console.log("✅ Saved NewsAnalysis:", analysisDoc._id);
       }
