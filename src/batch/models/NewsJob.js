@@ -19,8 +19,11 @@ const newsJobSchema = new mongoose.Schema(
       content: String
     },
 
-    // AI analysis JSON
-    aiAnalysis: mongoose.Schema.Types.Mixed,
+    // AI analysis (simple strings)
+    aiAnalysis: {
+      impactDescription: String,
+      quickActions: String
+    },
 
     // flag you mentioned
     statusFlag: { type: Boolean, default: true } // true = active/visible

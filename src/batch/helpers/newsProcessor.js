@@ -54,25 +54,20 @@ async function fetchLatestNewsArticle() {
   }
 }
 
-// Helper: call Perplexity to get impact + quick actions AS STRING
+// Helper: call Perplexity to get simple impact description + quick actions text
 async function analyzeArticleWithAI(article) {
   const systemPrompt = `
-You are an AI that analyzes news articles and returns JSON-like text.
+You are an AI that analyzes news articles and returns STRICT JSON.
 
 Rules:
-- Start with "{" and end with "}".
-- Follow this shape:
+- Start directly with "{" and end with "}" (no markdown, no commentary).
+- Follow this exact shape:
 {
   "impactDescription": "5-6 sentences explaining the overall impact of this news for a general audience.",
-  "quickActions": [
-    {
-      "title": "Short action title.",
-      "description": "1-2 sentences with a practical next step or way to think about this news."
-    }
-  ]
+  "quickActions": "3-6 short bullet-style suggestions in plain text, separated by line breaks, telling the reader what to do or how to think about this news."
 }
-- quickActions should contain 3–5 items for different audiences (general readers, investors, policy watchers, etc.).
-- Do NOT wrap the output in markdown code fences.
+- Do NOT add any other keys.
+- Do NOT wrap the output in markdown code fences or any extra text.
 `.trim();
 
   const userPrompt = `
@@ -115,7 +110,7 @@ ContentSnippet: ${article.content}
   let content = response.data?.choices?.[0]?.message?.content || "";
   content = content.trim();
 
-  // strip ```
+  // strip ``` if model still wraps in code fences
   if (content.startsWith("```")) {
     const firstBrace = content.indexOf("{");
     const lastBrace = content.lastIndexOf("}");
@@ -124,8 +119,26 @@ ContentSnippet: ${article.content}
     }
   }
 
-  // do NOT JSON.parse here; just store as string
-  return { rawJsonText: content };
+  let parsed;
+  try {
+    parsed = JSON.parse(content);
+  } catch (e) {
+    console.error("❌ Failed to parse AI JSON, falling back to empty strings", e.message);
+    parsed = {
+      impactDescription: "",
+      quickActions: ""
+    };
+  }
+
+  const {
+    impactDescription = "",
+    quickActions = ""
+  } = parsed || {};
+
+  return {
+    impactDescription,
+    quickActions
+  };
 }
 
 // Main processor entry

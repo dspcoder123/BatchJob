@@ -1,23 +1,5 @@
 import mongoose from "mongoose";
 
-const quickActionSchema = new mongoose.Schema(
-  {
-    audience: String,
-    actionTitle: String,
-    actionDescription: String
-  },
-  { _id: false }
-);
-
-const impactSummarySchema = new mongoose.Schema(
-  {
-    geopolitics: String,
-    economyAndMarkets: String,
-    publicPerception: String
-  },
-  { _id: false }
-);
-
 const newsAnalysisSchema = new mongoose.Schema(
     {
       title: { type: String, required: true },
@@ -27,10 +9,11 @@ const newsAnalysisSchema = new mongoose.Schema(
       urlToImage: String,
       publishedAt: String,
       content: String,
-  
-      // store AI JSON-like output as plain string
-      aiText: String,
-  
+
+      // structured AI analysis fields (simple strings)
+      impactDescription: String,
+      quickActions: String,
+
       status: { type: Boolean, default: true },
       jobId: { type: String }
     },

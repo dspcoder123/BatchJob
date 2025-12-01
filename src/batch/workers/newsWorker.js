@@ -71,7 +71,8 @@ const newsWorker = new Worker(
           urlToImage: article.urlToImage,
           publishedAt: article.publishedAt,
           content: article.content,
-          aiText: aiAnalysis.rawJsonText || "",
+          impactDescription: aiAnalysis.impactDescription || "",
+          quickActions: aiAnalysis.quickActions || "",
           status: true,
           jobId: jobDoc ? jobDoc._id.toString() : null
         });
